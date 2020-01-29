@@ -1,0 +1,42 @@
+数据库查询我们oracle对应的版本：select * from v$version;
+
+ oracle登錄用戶：system
+	登录密码:admin
+
+
+mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=D:\javaWorkSpace\heima_s
+sm\lib\ojdbc6.jar（D:\javaWorkSpace\heima_ssm>mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=D:\javaWorkSpace\heima_s
+sm\lib\ojdbc6.jar）
+
+pom.xml文件中引入坐标:
+<dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
+      <version>11.2.0.1.0</version>
+</dependency>
+
+
+--创建表空间
+create tablespace itheima
+datafile 'c:\oracleData\itheima.dbf'
+size 100m
+autoextend on
+next 10m;
+
+--删除表空间
+drop tablespace itheima;
+
+--创建用户
+create user itheima --用户名
+identified by itheima --密码
+default tablespace itheima;
+
+--给用户授权
+--oracle数据库中常用角色
+connect --连接角色  基本角色
+resource --开发者角色
+dba --超级管理员角色
+--给itheima授予dba角色（只是方便学习  工作中一般是resource）
+grant dba to itheima;
+
+--切换到itheima用户下(session---》用itheima的用户名 和密码登录)
